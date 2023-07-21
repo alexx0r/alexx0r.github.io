@@ -119,6 +119,10 @@
                         <input type="checkbox" name="fleisch-chicken"/>
                         H&auml;hnchen
                     </label>
+                    <label>
+                        <input type="checkbox" name="fleisch-falafel"/>
+                        Falafel
+                    </label>
                 </fieldset>
             </div>
 
@@ -235,6 +239,7 @@
         form['sosse-scharf'].checked = decoded & BIT_SOSSE_SCHARF;
         form['fleisch-chicken'].checked = decoded & BIT_CHICKEN;
         form['fleisch-veal'].checked = decoded & BIT_VEAL;
+        form['fleisch-falafel'].checked = decoded & BIT_FALAFEL;
 
         isCalculating = false;
     }
@@ -253,7 +258,8 @@
                 form['sosse-joghurt'].checked ? BIT_SOSSE_JOGHURT : 0) + (
                 form['sosse-scharf'].checked ? BIT_SOSSE_SCHARF : 0) + (
                 form['fleisch-chicken'].checked ? BIT_CHICKEN : 0) + (
-                form['fleisch-veal'].checked ? BIT_VEAL : 0)
+                form['fleisch-veal'].checked ? BIT_VEAL : 0) + (
+                form['fleisch-falafel'].checked ? BIT_FALAFEL : 0)
         ;
 
         let encoded = ""
@@ -269,7 +275,8 @@
         return encoded;
     }
 
-    const BIT_LOCATION_FORMAT = 12;
+    const BIT_LOCATION_FORMAT = 13;
+    const BIT_FALAFEL = 1 << 12;
     const BIT_SOSSE_EISBERG = 1 << 11;
     const BIT_SOSSE_TOMATE = 1 << 10;
     const BIT_SOSSE_WEISSKOHL = 1 << 9;
