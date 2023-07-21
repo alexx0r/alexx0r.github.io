@@ -3,7 +3,7 @@
 <html lang="de">
 <head>
     <title>Kebab Code</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
 
     <style>
         body {
@@ -80,8 +80,8 @@
         }
     </style>
 </head>
-<body>
-<form onchange="calculateFromIngredients()">
+<body onload="init()">
+<form onchange="calculateFromIngredients()" onsubmit="return false;">
     <h1>Kebab Code</h1>
     <input name="code" id="code-output" maxlength="4" oninput="convertFromOutput()"/>
     <div id="bottom">
@@ -178,29 +178,42 @@
 </form>
 
 <script>
+    function init() {
+        let hash = window.location.hash;
+        if (hash.length > 0) {
+            hash = hash.substring(1)
+        }
+
+        document.getElementById('code-output').value = hash || '3zx';
+        convertFromOutput();
+    }
+
     const alphabetChars = "0123456789abcdefghkmnpqrstuvwxyz" // must be 32 chars long
     let isCalculating = false;
 
     function calculateFromIngredients() {
-        if(isCalculating) {
+        if (isCalculating) {
             return
         }
         isCalculating = true
         const form = document.forms.item(0);
         const output = document.getElementById("code-output");
 
-        output.value = calculateFromIngredientSelection(form);
+        const encoded = calculateFromIngredientSelection(form);
+        output.value = encoded;
+        window.location.hash = '#' + encoded;
         isCalculating = false
     }
 
     function convertFromOutput() {
-        if(isCalculating) {
+        if (isCalculating) {
             return
         }
         isCalculating = true
 
         const form = document.forms.item(0);
         const output = document.getElementById("code-output");
+        window.location.hash = '#' + output.value;
 
         let decoded = 0
         const encoded = (output.value + "").toLowerCase();
@@ -269,7 +282,6 @@
     const BIT_SOSSE_SCHARF = 1 << 2;
     const BIT_CHICKEN = 1 << 1;
     const BIT_VEAL = 1 << 0;
-
 </script>
 
 </body>
