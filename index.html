@@ -3,6 +3,7 @@
 <html lang="de">
 <head>
     <title>Kebab Code</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
 
     <style>
         body {
@@ -11,30 +12,32 @@
             font-family: sans-serif;
         }
 
-        #top {
+        h1 {
+            margin-top: 10px;
             text-align: center;
         }
 
         #code-output {
-            margin-top: 20px;
-            margin-bottom: 60px;
-            font-size: 40px;
+            font-size: 3em;
             width: 150px;
             text-transform: uppercase;
             text-align: center;
+            margin: auto auto 40px;
         }
 
         form {
             margin: auto;
             display: grid;
-            grid-template-rows: auto auto;
+            align-content: center;
+            grid-template-rows: auto auto auto;
         }
 
         #grid {
             margin: auto;
             display: grid;
-            grid-template-columns: auto auto auto auto;
+            grid-template-columns: 1fr 1fr;
             width: fit-content;
+            gap: 30px;
         }
 
         .checklist {
@@ -46,7 +49,6 @@
         }
 
         .column {
-            width: fit-content;
         }
 
         label {
@@ -58,14 +60,30 @@
         label:hover {
             background-color: #f7f7f7;
         }
+
+        @media (orientation: landscape) {
+            #grid {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+
+            .checklist {
+                margin-bottom: 0;
+            }
+
+            h1 {
+                margin-bottom: 10px;
+            }
+
+            #code-output {
+                margin: auto auto 20px;
+            }
+        }
     </style>
 </head>
 <body>
 <form onchange="calculateFromIngredients()">
-    <div id="top">
-        <h1>Kebab Code</h1>
-        <input name="code" id="code-output" maxlength="4" oninput="convertFromOutput()"/>
-    </div>
+    <h1>Kebab Code</h1>
+    <input name="code" id="code-output" maxlength="4" oninput="convertFromOutput()"/>
     <div id="bottom">
         <div id="grid">
             <div class="column">
@@ -99,7 +117,7 @@
                     </label>
                     <label>
                         <input type="checkbox" name="fleisch-chicken"/>
-                        H&auml;chnen
+                        H&auml;hnchen
                     </label>
                 </fieldset>
             </div>
