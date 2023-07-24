@@ -18,18 +18,17 @@
         }
 
         #code-output {
-            font-size: 3em;
+            font-size: 1.5em;
             width: 150px;
             text-transform: uppercase;
             text-align: center;
-            margin: auto auto 40px;
+            margin: 20px auto;
         }
 
         form {
-            margin: auto;
             display: grid;
-            align-content: center;
             grid-template-rows: auto auto auto;
+            height: 100vh;
         }
 
         #grid {
@@ -44,11 +43,8 @@
             border: none;
             display: flex;
             flex-direction: column;
-            width: fit-content;
+            width: max-content;
             padding: 0;
-        }
-
-        .column {
         }
 
         label {
@@ -61,29 +57,20 @@
             background-color: #f7f7f7;
         }
 
-        @media (orientation: landscape) {
+        @media (width > 700px) {
             #grid {
                 grid-template-columns: 1fr 1fr 1fr 1fr;
-            }
-
-            .checklist {
-                margin-bottom: 0;
-            }
-
-            h1 {
-                margin-bottom: 10px;
-            }
-
-            #code-output {
-                margin: auto auto 20px;
             }
         }
     </style>
 </head>
 <body onload="init()">
 <form onchange="calculateFromIngredients()" onsubmit="return false;">
-    <h1>Kebab Code</h1>
+    <h1>
+        Kebab
     <input name="code" id="code-output" maxlength="4" oninput="convertFromOutput()"/>
+        Code
+    </h1>
     <div id="bottom">
         <div id="grid">
             <div class="column">
