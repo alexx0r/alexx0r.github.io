@@ -77,10 +77,6 @@
                 <b>Format</b>
                 <fieldset class="checklist">
                     <label>
-                        <input type="radio" name="format" value="3"/>
-                        klein
-                    </label>
-                    <label>
                         <input type="radio" name="format" value="0"/>
                         normal
                     </label>
@@ -92,23 +88,35 @@
                         <input type="radio" name="format" value="1"/>
                         D&uuml;r&uuml;m
                     </label>
+                    <label>
+                        <input type="radio" name="format" value="3"/>
+                        Box/Salat
+                    </label>
+                    <label>
+                        <input type="radio" name="format" value="4"/>
+                        Box/Pommes
+                    </label>
                 </fieldset>
             </div>
 
             <div class="column">
-                <b>Fleisch</b>
+                <b>Basis</b>
                 <fieldset class="checklist">
                     <label>
-                        <input type="checkbox" name="fleisch-veal"/>
+                        <input type="checkbox" name="basis-veal"/>
                         Kalb
                     </label>
                     <label>
-                        <input type="checkbox" name="fleisch-chicken"/>
+                        <input type="checkbox" name="basis-chicken"/>
                         H&auml;hnchen
                     </label>
                     <label>
-                        <input type="checkbox" name="fleisch-falafel"/>
+                        <input type="checkbox" name="basis-falafel"/>
                         Falafel
+                    </label>
+                    <label>
+                        <input type="checkbox" name="basis-cheese"/>
+                        K&auml;se
                     </label>
                 </fieldset>
             </div>
@@ -200,7 +208,7 @@
         if (isCalculating) {
             return
         }
-        isCalculating = true
+        isCalculating = true;
 
         const form = document.forms.item(0);
         const output = document.getElementById("code-output");
@@ -224,29 +232,35 @@
         form['sosse-curry'].checked = decoded & BIT_SOSSE_CURRY;
         form['sosse-herbs'].checked = decoded & BIT_SOSSE_HERBS;
         form['sosse-scharf'].checked = decoded & BIT_SOSSE_SCHARF;
-        form['fleisch-chicken'].checked = decoded & BIT_CHICKEN;
-        form['fleisch-veal'].checked = decoded & BIT_VEAL;
-        form['fleisch-falafel'].checked = decoded & BIT_FALAFEL;
+        form['basis-chicken'].checked = decoded & BIT_CHICKEN;
+        form['basis-veal'].checked = decoded & BIT_VEAL;
+        form['basis-falafel'].checked = decoded & BIT_FALAFEL;
+        form['basis-cheese'].checked = decoded & BIT_CHEESE;
+
+        toggleSaladOptions();
 
         isCalculating = false;
     }
 
     function calculateFromIngredientSelection(form) {
+        toggleSaladOptions();
+
         const code =
             (form.format.value << BIT_LOCATION_FORMAT) +
-            (form['salat-eisberg'].checked ? BIT_SOSSE_EISBERG : 0) + (
-                form['salat-tomate'].checked ? BIT_SOSSE_TOMATE : 0) + (
-                form['salat-weisskohl'].checked ? BIT_SOSSE_WEISSKOHL : 0) + (
-                form['salat-rotkohl'].checked ? BIT_SOSSE_ROTKOHL : 0) + (
-                form['salat-zwiebel'].checked ? BIT_SOSSE_ZWIEBEL : 0) + (
-                form['sosse-knoblauch'].checked ? BIT_SOSSE_KNOBLAUCH : 0) + (
-                form['sosse-cocktail'].checked ? BIT_SOSSE_COCKTAIL : 0) + (
-                form['sosse-curry'].checked ? BIT_SOSSE_CURRY : 0) + (
-                form['sosse-joghurt'].checked ? BIT_SOSSE_JOGHURT : 0) + (
-                form['sosse-scharf'].checked ? BIT_SOSSE_SCHARF : 0) + (
-                form['fleisch-chicken'].checked ? BIT_CHICKEN : 0) + (
-                form['fleisch-veal'].checked ? BIT_VEAL : 0) + (
-                form['fleisch-falafel'].checked ? BIT_FALAFEL : 0)
+            (form['salat-eisberg'].checked ? BIT_SOSSE_EISBERG : 0) +
+            (form['salat-tomate'].checked ? BIT_SOSSE_TOMATE : 0) +
+            (form['salat-weisskohl'].checked ? BIT_SOSSE_WEISSKOHL : 0) +
+            (form['salat-rotkohl'].checked ? BIT_SOSSE_ROTKOHL : 0) +
+            (form['salat-zwiebel'].checked ? BIT_SOSSE_ZWIEBEL : 0) +
+            (form['sosse-knoblauch'].checked ? BIT_SOSSE_KNOBLAUCH : 0) +
+            (form['sosse-cocktail'].checked ? BIT_SOSSE_COCKTAIL : 0) +
+            (form['sosse-curry'].checked ? BIT_SOSSE_CURRY : 0) +
+            (form['sosse-herbs'].checked ? BIT_SOSSE_HERBS : 0) +
+            (form['sosse-scharf'].checked ? BIT_SOSSE_SCHARF : 0) +
+            (form['basis-chicken'].checked ? BIT_CHICKEN : 0) +
+            (form['basis-veal'].checked ? BIT_VEAL : 0) +
+            (form['basis-falafel'].checked ? BIT_FALAFEL : 0) +
+            (form['basis-cheese'].checked ? BIT_CHEESE : 0)
         ;
 
         let encoded = ""
@@ -262,6 +276,29 @@
         return encoded;
     }
 
+    function toggleSaladOptions() {
+        const form = document.forms.item(0);
+
+        const noVegetablesAllowed = form.format.value === FORMAT_BOX_POMMES;
+
+        form['salat-eisberg'].disabled = noVegetablesAllowed ? 'disabled' : undefined;
+        form['salat-tomate'].disabled = noVegetablesAllowed ? 'disabled' : undefined;
+        form['salat-weisskohl'].disabled = noVegetablesAllowed ? 'disabled' : undefined;
+        form['salat-rotkohl'].disabled = noVegetablesAllowed ? 'disabled' : undefined;
+        form['salat-zwiebel'].disabled = noVegetablesAllowed ? 'disabled' : undefined;
+
+        if (noVegetablesAllowed) {
+            form['salat-eisberg'].checked = false;
+            form['salat-tomate'].checked = false;
+            form['salat-weisskohl'].checked = false;
+            form['salat-rotkohl'].checked = false;
+            form['salat-zwiebel'].checked = false;
+        }
+    }
+
+    const FORMAT_BOX_POMMES = "4";
+
+    const BIT_CHEESE = 1 << 16;
     const BIT_LOCATION_FORMAT = 13;
     const BIT_FALAFEL = 1 << 12;
     const BIT_SOSSE_EISBERG = 1 << 11;
@@ -272,7 +309,7 @@
     const BIT_SOSSE_KNOBLAUCH = 1 << 6;
     const BIT_SOSSE_COCKTAIL = 1 << 5;
     const BIT_SOSSE_CURRY = 1 << 4;
-    const BIT_SOSSE_JOGHURT = 1 << 3;
+    const BIT_SOSSE_HERBS = 1 << 3;
     const BIT_SOSSE_SCHARF = 1 << 2;
     const BIT_CHICKEN = 1 << 1;
     const BIT_VEAL = 1 << 0;
