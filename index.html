@@ -344,7 +344,7 @@
     for (let translatedElement of document.getElementsByClassName("translated")) {
         const key = translatedElement.getAttribute('translationKey');
         if(key) {
-            translatedElement.innerHTML = msg(translatedElement.innerText, key);
+            translatedElement.textContent = msg(translatedElement.innerText, key);
         }
     }
 
