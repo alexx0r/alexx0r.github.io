@@ -74,101 +74,101 @@
     <div id="bottom">
         <div id="grid">
             <div class="column">
-                <b>Format</b>
+                <b class="translated" translationKey="format">Format</b>
                 <fieldset class="checklist">
                     <label>
                         <input type="radio" name="format" value="0"/>
-                        normal
+                        <span class="translated" translationKey="format-normal">normal</span>
                     </label>
                     <label>
                         <input type="radio" name="format" value="2"/>
-                        gro&szlig;
+                        <span class="translated" translationKey="format-large">groß</span>
                     </label>
                     <label>
                         <input type="radio" name="format" value="1"/>
-                        D&uuml;r&uuml;m
+                        <span class="translated" translationKey="format-yufka">Dürüm</span>
                     </label>
                     <label>
                         <input type="radio" name="format" value="3"/>
-                        Box/Salat
+                        <span class="translated" translationKey="format-box-salat">Box/Salat</span>
                     </label>
                     <label>
                         <input type="radio" name="format" value="4"/>
-                        Box/Pommes
+                        <span class="translated" translationKey="format-box-fries">Box/Pommes</span>
                     </label>
                 </fieldset>
             </div>
 
             <div class="column">
-                <b>Basis</b>
+                <b class="translated" translationKey="basis">Basis</b>
                 <fieldset class="checklist">
                     <label>
                         <input type="checkbox" name="basis-veal"/>
-                        Kalb
+                        <span class="translated" translationKey="basis-veal">Kalb</span>
                     </label>
                     <label>
                         <input type="checkbox" name="basis-chicken"/>
-                        H&auml;hnchen
+                        <span class="translated" translationKey="basis-poultry">H&auml;hnchen</span>
                     </label>
                     <label>
                         <input type="checkbox" name="basis-falafel"/>
-                        Falafel
+                        <span class="translated" translationKey="basis-falafel">Falafel</span>
                     </label>
                     <label>
                         <input type="checkbox" name="basis-cheese"/>
-                        K&auml;se
+                        <span class="translated" translationKey="basis-cheese">K&auml;se</span>
                     </label>
                 </fieldset>
             </div>
 
             <div class="column">
-                <b>Gem&uuml;se</b>
+                <b class="translated" translationKey="salat">Gem&uuml;se</b>
                 <fieldset class="checklist">
                     <label>
                         <input type="checkbox" name="salat-eisberg"/>
-                        Eisberg
+                        <span class="translated" translationKey="salat-lettuce">Eisberg</span>
                     </label>
                     <label>
                         <input type="checkbox" name="salat-tomate"/>
-                        Tomate
+                        <span class="translated" translationKey="salat-tomato">Tomate</span>
                     </label>
                     <label>
                         <input type="checkbox" name="salat-weisskohl"/>
-                        Weißkohl
+                        <span class="translated" translationKey="salat-white-cabbage">Weißkohl</span>
                     </label>
                     <label>
                         <input type="checkbox" name="salat-rotkohl"/>
-                        Rotkohl
+                        <span class="translated" translationKey="salat-red-cabbage">Rotkohl</span>
                     </label>
                     <label>
                         <input type="checkbox" name="salat-zwiebel"/>
-                        Zwiebel
+                        <span class="translated" translationKey="salat-onion">Zwiebel</span>
                     </label>
                 </fieldset>
             </div>
 
             <div class="column">
-                <b>So&szlig;en</b>
+                <b class="translated" translationKey="sauces">So&szlig;en</b>
                 <fieldset class="checklist">
                     <label>
                         <input type="checkbox" name="sosse-knoblauch"/>
-                        Knoblauch
+                        <span class="translated" translationKey="sauces-garlic">Knoblauch</span>
                     </label>
                     <label>
                         <input type="checkbox" name="sosse-cocktail"/>
-                        Cocktail
+                        <span class="translated" translationKey="sauces-cocktail">Cocktail</span>
                     </label>
                     <label>
                         <input type="checkbox" name="sosse-curry"/>
-                        Curry
+                        <span class="translated" translationKey="sauces-curry">Curry</span>
                     </label>
                     <label>
                         <input type="checkbox" name="sosse-herbs"/>
-                        Kr&auml;uter
+                        <span class="translated" translationKey="sauces-herbs">Kr&auml;uter</span>
                     </label>
                     <label>
                         <input type="checkbox" name="sosse-scharf"/>
-                        Scharf
+                        <span class="translated" translationKey="sauces-spicy">Scharf</span>
                     </label>
                 </fieldset>
             </div>
@@ -313,6 +313,46 @@
     const BIT_SOSSE_SCHARF = 1 << 2;
     const BIT_CHICKEN = 1 << 1;
     const BIT_VEAL = 1 << 0;
+
+    const translationsEN = {
+        'format': 'Wrap format',
+        'format-normal': 'standard',
+        'format-large': 'large',
+        'format-yufka': 'Yufka',
+        'format-box-salat': 'Box/Salad',
+        'format-box-fries': 'Box/Fries',
+        'basis': 'Basis',
+        'basis-veal': 'Veal',
+        'basis-poultry': 'Poultry',
+        'basis-falafel': 'Falafel',
+        'basis-cheese': 'Cheese',
+        'salat': 'Salads',
+        'salat-lettuce': 'Lettuce',
+        'salat-tomato': 'Tomatoes',
+        'salat-white-cabbage': 'White cabbage',
+        'salat-red-cabbage': 'White cabbage',
+        'salat-onion': 'Onion',
+        'sauces': 'Sauces',
+        'sauces-garlic': 'Garlic',
+        'sauces-cocktail': 'Cocktail',
+        'sauces-curry': 'Curry',
+        'sauces-herbs': 'Herbs',
+        'sauces-spicy': 'Spicy',
+    };
+
+    for (let translatedElement of document.getElementsByClassName("translated")) {
+        const key = translatedElement.getAttribute('translationKey');
+        if(key) {
+            translatedElement.innerHTML = msg(translatedElement.innerText, key);
+        }
+    }
+
+    function msg(defaultTranslation, id) {
+        if(navigator.language.includes("de")) {
+            return defaultTranslation;
+        }
+        return translationsEN[id] || defaultTranslation;
+    }
 </script>
 
 </body>
