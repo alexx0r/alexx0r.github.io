@@ -108,8 +108,8 @@
                         <span class="translated" translationKey="basis-veal">Kalb</span>
                     </label>
                     <label>
-                        <input type="checkbox" name="basis-chicken"/>
-                        <span class="translated" translationKey="basis-poultry">H&auml;hnchen</span>
+                        <input type="checkbox" name="basis-poultry"/>
+                        <span class="translated" translationKey="basis-poultry">Geflügel</span>
                     </label>
                     <label>
                         <input type="checkbox" name="basis-falafel"/>
@@ -233,7 +233,7 @@
         form['sosse-curry'].checked = decoded & BIT_SOSSE_CURRY;
         form['sosse-herbs'].checked = decoded & BIT_SOSSE_HERBS;
         form['sosse-scharf'].checked = decoded & BIT_SOSSE_SCHARF;
-        form['basis-chicken'].checked = decoded & BIT_CHICKEN;
+        form['basis-poultry'].checked = decoded & BIT_POULTRY;
         form['basis-veal'].checked = decoded & BIT_VEAL;
         form['basis-falafel'].checked = decoded & BIT_FALAFEL;
         form['basis-cheese'].checked = decoded & BIT_CHEESE;
@@ -258,7 +258,7 @@
             (form['sosse-curry'].checked ? BIT_SOSSE_CURRY : 0) +
             (form['sosse-herbs'].checked ? BIT_SOSSE_HERBS : 0) +
             (form['sosse-scharf'].checked ? BIT_SOSSE_SCHARF : 0) +
-            (form['basis-chicken'].checked ? BIT_CHICKEN : 0) +
+            (form['basis-poultry'].checked ? BIT_POULTRY : 0) +
             (form['basis-veal'].checked ? BIT_VEAL : 0) +
             (form['basis-falafel'].checked ? BIT_FALAFEL : 0) +
             (form['basis-cheese'].checked ? BIT_CHEESE : 0)
@@ -312,7 +312,7 @@
     const BIT_SOSSE_CURRY = 1 << 4;
     const BIT_SOSSE_HERBS = 1 << 3;
     const BIT_SOSSE_SCHARF = 1 << 2;
-    const BIT_CHICKEN = 1 << 1;
+    const BIT_POULTRY = 1 << 1;
     const BIT_VEAL = 1 << 0;
 
     const translationsEN = {
